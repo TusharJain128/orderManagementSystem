@@ -16,7 +16,7 @@ try {
             if(!validation) return res.status(400).send({  status: false,message: error})
     
             const findCustomer=await customerModel.findById(req.decode.customerId)
-            if(!findCustomer) return res.status(404).send({status:false,message:"not customer found with this id"})
+            if(!findCustomer) return res.status(404).send({status:false,message:"no customer found with this id"})
     
             //cashback and discount
     
@@ -53,32 +53,29 @@ try {
             //update customer stautus and discount 
             const updateCustomer=await customerModel.findByIdAndUpdate(req.decode.customerId,{$set:{status:status,cashBack:cashBack},$inc:{orders:1}})
     
-            //email functionality not working
+
             if(findCustomer.orders==9){
                 
-                        let mailTransporter = nodemailer.createTransport({
-                            service: 'gmail',
-                            auth: {
-                                user: "vinti",
-                                pass: "1234rtfjn"
-                            }
-                        });
-                        
-                        let mailDetails = {
-                            from: "vintikumari04@gmail.com",
-                            to: findCustomer.email, 
-                            subject: 'Test mail',
-                            text: `You have placed 9 orders with us. Buy one more stuff and you will be
-                            promoted to Gold customer and enjoy 10% discounts!`
-                        };
-                        
-                        mailTransporter.sendMail(mailDetails , function(err, data) {
-                            if(err) {
-                                console.log('Error Occurs');
-                            } else {
-                                console.log('Email sent successfully');
-                            }
-                        });
+                let transport = nodemailer.createTransport(
+                    {
+                          service: 'gmail',
+                          auth: { user: 'tiwaridivyamala99@gmail.com', pass: 'divyaGrv@12345678' }
+                    }
+              )
+  
+              let mailOptions = {
+                    from: 'grvgoswami2007@gmail.com',
+                    to: email,
+                    subject: `"Hello"${findCustomer.name}`,
+                    text: ` hii ${findCustomer.name} You have placed 9 orders with us. Buy one more stuff and you will be
+                    promoted to Gold customer and enjoy 10% discounts!`
+              }
+  
+              transport.sendMail(mailOptions, function (err, info) {
+                    if (err) return console.log(err.message)
+                    if (info) return consol.log('Email Sent' + info.response)
+  
+              })
             }
     
     

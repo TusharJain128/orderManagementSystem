@@ -24,7 +24,7 @@ try {
     
         const createData=await customerModel.create(data)
     
-        return res.status(200).send({status:false,message:createData})
+        return res.status(201).send({status:false,message:createData})
 } catch (error) {
     return res.status(500).send({ status: false, message: error.message})
 }

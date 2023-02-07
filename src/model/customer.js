@@ -27,6 +27,7 @@ const costomerSchema = new mongoose.Schema({
 
     status:{
         type:String,
+        enum: ["regular","gold","platinum"],
         default:"regular"
     },
     orders:{
