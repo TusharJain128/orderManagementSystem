@@ -6,7 +6,7 @@ const nodemailer = require('nodemailer');
 const createOrder=async (req,res)=>{
 try {
             let data=req.body
-            if (Object.keys(req.body).length == 0) {
+            if (Object.keys(data).length == 0) {
                 return res.status(400).send({ status: false, message: "Please Enter data in body" })
             }
     
@@ -18,7 +18,7 @@ try {
             let findCustomer=await customerModel.findById(data.customerId)
             if(!findCustomer) return res.status(404).send({status:false,message:"no customer found with this id"})
 
-            if(data.customerId != decode.customerId){
+            if(data.customerId != req.decode.customerId){
                 return res.status(403).send({status:false, message: "You are not autherised"})
             }
     
@@ -69,7 +69,7 @@ try {
   
               let mailOptions = {
                     from: 'grvgoswami2007@gmail.com',
-                    to: email,
+                    to: findCustomer.email,
                     subject: `"Hello"${findCustomer.name}`,
                     text: ` hii ${findCustomer.name} You have placed 9 orders with us. Buy one more stuff and you will be
                     promoted to Gold customer and enjoy 10% discounts!`
