@@ -1,6 +1,6 @@
-const orderModel=require("../model/order")
+const orderModel=require("../model/orderModel")
 const {orderJoi}=require("../validation/joivalidation")
-const customerModel=require("../model/customer")
+const customerModel=require("../model/customerModel")
 const nodemailer = require('nodemailer');
 
 const createOrder=async (req,res)=>{
@@ -15,8 +15,12 @@ try {
             const validation=await orderJoi.validateAsync(data).then(()=>true).catch((err)=>{error=err.message;return null})
             if(!validation) return res.status(400).send({  status: false,message: error})
     
-            const findCustomer=await customerModel.findById(req.decode.customerId)
+            let findCustomer=await customerModel.findById(data.customerId)
             if(!findCustomer) return res.status(404).send({status:false,message:"no customer found with this id"})
+
+            if(data.customerId != decode.customerId){
+                return res.status(403).send({status:false, message: "You are not autherised"})
+            }
     
             //cashback and discount
     
@@ -51,7 +55,7 @@ try {
             }
     
             //update customer stautus and discount 
-            const updateCustomer=await customerModel.findByIdAndUpdate(req.decode.customerId,{$set:{status:status,cashBack:cashBack},$inc:{orders:1}})
+            const updateCustomer=await customerModel.findByIdAndUpdate(data.customerId,{$set:{status:status,cashBack:cashBack},$inc:{orders:1}})
     
 
             if(findCustomer.orders==9){

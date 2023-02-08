@@ -1,4 +1,4 @@
-const customerModel=require("../model/customer")
+const customerModel=require("../model/customerModel")
 const {customerJoi,loginJoi}=require("../validation/joivalidation")
 const jwt=require("jsonwebtoken")
 
