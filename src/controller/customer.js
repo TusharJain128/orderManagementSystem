@@ -34,7 +34,7 @@ try {
 const loginCustomer=async (req,res)=>{
 try {
         let data=req.body
-        if (Object.keys(req.body).length == 0) {
+        if (Object.keys(data).length == 0) {
             return res.status(400).send({ status: false, message: "Please Enter data in body" })
         }
         

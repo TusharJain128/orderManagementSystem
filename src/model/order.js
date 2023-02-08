@@ -1,14 +1,15 @@
 const mongoose  = require("mongoose");
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const orderSchema = new mongoose.Schema({
-    title : {
-        type:String,
-        require:true,
-        trim:true,
-        lowercase:true
+    customerId : {
+        type:ObjectId,
+        ref: "customerCollection",
+        required: true,
+        trim:true
     },
 
-    description:{
+    productName:{
         type : String,
         require:true,
         trim:true,

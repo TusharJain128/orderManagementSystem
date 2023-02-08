@@ -1,6 +1,6 @@
 const mongoose  = require("mongoose");
 
-const costomerSchema = new mongoose.Schema({
+const customerSchema = new mongoose.Schema({
     name:{
         type : String,
         require:true,
@@ -42,4 +42,4 @@ const costomerSchema = new mongoose.Schema({
 },{timestamps:true})
 
 
-module.exports = mongoose.model("customerCollection", costomerSchema)
+module.exports = mongoose.model("customerCollection", customerSchema)
